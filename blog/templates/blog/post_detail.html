@@ -7,6 +7,19 @@
     <div class="container">
         <div class="row g-0">
             <div class="col-md-6 masthead-text">
+                {% if "placeholder" in post.featured_image.url %}
+                <img 
+                    src="{% static 'images/default.jpg' %}" 
+                    class="scale" 
+                    alt="placeholder image"
+                >
+                {% else %}
+                <img 
+                    src="{{ post.featured_image.url }}" 
+                    class="scale" 
+                    alt="{{ post.title }}"
+                >
+                {% endif %}
                 <!-- Post title -->
                 <h1 class="post-title">{{ post.title }}</h1>
                 <!-- Post author and created date -->
@@ -15,9 +28,9 @@
                 </p>
             </div>
             <div class="d-none d-md-block col-md-6 masthead-image">
-                <img
-                    src="{% static 'images/default.jpg' %}"
-                    class="scale"
+                <img 
+                    src="{% static 'images/default.jpg' %}" 
+                    class="scale" 
                     alt="placeholder"
                 />
             </div>
@@ -74,14 +87,14 @@
                     </p>
                     {% endif %}
                     {% if user.is_authenticated and comment.author == user %}
-                    <button
-                        class="btn btn-delete"
+                    <button 
+                        class="btn btn-delete" 
                         comment_id="{{ comment.id }}"
                     >
                         Delete
                     </button>
-                    <button
-                        class="btn btn-edit"
+                    <button 
+                        class="btn btn-edit" 
                         comment_id="{{ comment.id }}"
                     >
                         Edit
@@ -98,16 +111,16 @@
                 {% if user.is_authenticated %}
                 <h3>Leave a comment:</h3>
                 <p>Posting as: {{ user.username }}</p>
-                <form
-                    id="commentForm"
-                    method="post"
+                <form 
+                    id="commentForm" 
+                    method="post" 
                     style="margin-top: 1.3em;"
                 >
                     {{ comment_form | crispy }}
                     {% csrf_token %}
-                    <button
-                        id="submitButton"
-                        type="submit"
+                    <button 
+                        id="submitButton" 
+                        type="submit" 
                         class="btn btn-signup btn-lg"
                     >
                         Submit
@@ -122,28 +135,51 @@
 </div>
 
 <!-- Delete confirmation modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1"
-  aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"
-          id="deleteModalLabel">Delete comment?</h5>
-        <button type="button" class="btn-close"
-          data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete your comment?
-        This action cannot be undone.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"
-          data-bs-dismiss="modal">Close</button>
-        <a id="deleteConfirm" href="#" class="btn
-          btn-danger">Delete</a>
-      </div>
+<div 
+    class="modal fade" 
+    id="deleteModal" 
+    tabindex="-1" 
+    aria-labelledby="deleteModalLabel" 
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 
+                    class="modal-title" 
+                    id="deleteModalLabel"
+                >
+                    Delete comment?
+                </h5>
+                <button 
+                    type="button" 
+                    class="btn-close" 
+                    data-bs-dismiss="modal" 
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your comment?
+                This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button 
+                    type="button" 
+                    class="btn btn-secondary" 
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+                <a 
+                    id="deleteConfirm" 
+                    href="#" 
+                    class="btn btn-danger"
+                >
+                    Delete
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 {% endblock content %}
